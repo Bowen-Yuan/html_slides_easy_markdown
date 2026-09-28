@@ -1,0 +1,107 @@
+# Build the demo deck and publish it to GitHub Pages.
+#
+# The site is served from a subpath (/html_slides_easy_markdown/), which works
+# because every asset reference the renderer emits is relative (./assets/...).
+#
+# Chromium is required by the build itself: "slides build" renders every layout
+# candidate in a real browser and picks the first one that does not overflow.
+# Without a browser installed the build fails.
+#
+# The visual regression suite (pnpm test:visual) is intentionally NOT run here:
+# its baseline PNGs were rendered on Windows with CJK fonts (Microsoft YaHei /
+# SimHei / STKaiti) that the Ubuntu runner does not ship, so the pixel diff
+# would always fail. Unit tests are font independent and do run.
+
+name: Deploy demo to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment, but never cancel an in-flight one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # pnpm 12 is pinned because pnpm-workspace.yaml uses the v12 `allowBuilds`
+      # setting; older pnpm would block the esbuild/sharp install scripts.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          # Browsers are installed explicitly below, which keeps the install
+          # step fast and the browser version easy to see in the log.
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      # The demo is mostly Chinese text. The runner ships no CJK fonts, so
+      # without this the headless probe would measure tofu boxes instead of real
+      # glyphs and line wrapping could differ from a normal machine.
+      - name: Install CJK fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Build the demo deck
+        run: pnpm slides build examples/demo.md
+
+      # Uploading a static artifact bypasses Jekyll, but the marker keeps the
+      # output safe if the Pages source is ever switched back to a branch.
+      - name: Disable Jekyll
+        run: touch dist/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Enables Pages on first run; a no-op once it is already enabled.
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
