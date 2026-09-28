@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# build artifacts (node_modules, node and the network are never needed to present)
+dist/
+
+# cached remote assets (content-addressed)
+.cache/
+
+# visual regression working files (keep tests/visual/baseline/)
+tests/visual/current/
+
+# editor / OS noise
+.DS_Store
+Thumbs.db
+*.log
+
+# tool / agent state
+.codegraph/
+.omo/

@@ -1,0 +1,72 @@
+/* GSE Slides code highlighting
+   Deliberately restrained: one accent for keywords, muted tones elsewhere.
+   No rainbow theme. No neon. */
+
+.reveal .hljs {
+  display: block;
+  overflow: hidden;
+
+  background: transparent;
+  color: #222222;
+}
+
+.reveal .hljs-comment,
+.reveal .hljs-quote {
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+.reveal .hljs-keyword,
+.reveal .hljs-literal,
+.reveal .hljs-selector-tag,
+.reveal .hljs-doctag,
+.reveal .hljs-name {
+  color: rgb(106, 0, 95);
+  font-weight: 600;
+}
+
+.reveal .hljs-string,
+.reveal .hljs-regexp,
+.reveal .hljs-addition,
+.reveal .hljs-meta .hljs-string,
+.reveal .hljs-selector-attr,
+.reveal .hljs-selector-pseudo {
+  color: #4b6b52;
+}
+
+.reveal .hljs-number,
+.reveal .hljs-symbol,
+.reveal .hljs-bullet,
+.reveal .hljs-variable,
+.reveal .hljs-template-variable,
+.reveal .hljs-attribute,
+.reveal .hljs-selector-class,
+.reveal .hljs-selector-id {
+  color: #6a4b7a;
+}
+
+.reveal .hljs-title,
+.reveal .hljs-section,
+.reveal .hljs-function .hljs-title,
+.reveal .hljs-built_in,
+.reveal .hljs-type,
+.reveal .hljs-class .hljs-title {
+  color: #22425f;
+  font-weight: 600;
+}
+
+.reveal .hljs-meta {
+  color: #666666;
+}
+
+.reveal .hljs-deletion {
+  color: #a03030;
+}
+
+.reveal .hljs-emphasis {
+  font-style: italic;
+}
+
+.reveal .hljs-strong {
+  font-weight: 600;
+}

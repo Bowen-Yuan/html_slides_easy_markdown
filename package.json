@@ -1,0 +1,41 @@
+{
+  "name": "gse-slides",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Markdown-first presentation system with fixed typography and automatic image layout.",
+  "bin": {
+    "slides": "bin/slides.mjs"
+  },
+  "scripts": {
+    "slides": "node bin/slides.mjs",
+    "build": "node bin/slides.mjs build examples/demo.md",
+    "dev": "node bin/slides.mjs dev examples/demo.md",
+    "pdf": "node bin/slides.mjs pdf examples/demo.md",
+    "pptx": "node bin/slides.mjs pptx examples/demo.md",
+    "lint": "node bin/slides.mjs lint examples/demo.md",
+    "template:dev": "node bin/slides.mjs dev templates/deck.md",
+    "template:build": "node bin/slides.mjs build templates/deck.md",
+    "test": "node --test tests/*.test.mjs",
+    "test:visual": "node tests/visual/run.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "katex": "^0.16.21",
+    "markdown-it": "^14.1.0",
+    "markdown-it-texmath": "^1.0.0",
+    "mermaid": "^11.6.0",
+    "playwright": "^1.51.1",
+    "pptxgenjs": "^3.12.0",
+    "reveal.js": "^5.1.0",
+    "sharp": "^0.34.1"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  }
+}

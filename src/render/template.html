@@ -1,0 +1,56 @@
+<!doctype html>
+<html id="gse" lang="{{lang}}">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta name="author" content="{{author}}" />
+  <meta name="generator" content="gse-slides" />
+
+  <title>{{title}}</title>
+
+  <link
+    rel="stylesheet"
+    href="./assets/katex.min.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="./assets/reveal.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="./assets/highlight.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="./assets/gse.css"
+  />
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <div class="slides">
+    {{slides}}
+  </div>
+
+</div>
+
+<script src="./assets/reveal.js"></script>
+
+<script>
+Reveal.initialize({{revealInit}});
+</script>
+
+</body>
+
+</html>

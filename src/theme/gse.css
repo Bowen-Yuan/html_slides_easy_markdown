@@ -1,0 +1,707 @@
+/* ==========================================================================
+   GSE Slides theme
+   --------------------------------------------------------------------------
+   Fixed typography. This file is the ONLY place that decides font sizes,
+   spacing, colours and image constraints.
+
+   Rule: a slide's font size never changes because a slide has more content.
+   Overflow is solved by changing layout (or by failing the build), never by
+   shrinking text.
+
+   Logical slide size is always 1024 x 768. Reveal.js scales the whole stage;
+   it never re-flows it.
+   ========================================================================== */
+
+:root {
+  --gse-bg: #ffffff;
+  --gse-text: #222222;
+  --gse-muted: #555555;
+
+  --gse-accent: rgb(106, 0, 95);
+  --gse-border: #dddddd;
+  --gse-code-bg: #eeeeee;
+
+  --gse-font-title:
+    "Lato",
+    "Noto Sans CJK SC",
+    "Microsoft YaHei",
+    "SimHei",
+    sans-serif;
+
+  --gse-font-body:
+    "Lato",
+    "Noto Sans CJK SC",
+    "PingFang SC",
+    "Microsoft YaHei",
+    "STHeiti",
+    sans-serif;
+
+  --gse-font-serif:
+    "STKaiti",
+    "KaiTi",
+    serif;
+
+  --gse-font-code:
+    "Inconsolata",
+    "JetBrains Mono",
+    "Noto Sans Mono CJK SC",
+    monospace;
+
+  --gse-h1: 60px;
+  --gse-h2: 48px;
+  --gse-body: 32px;
+  --gse-code: 28px;
+  --gse-slide-number: 26px;
+
+  --gse-padding-x: 34px;
+  --gse-padding-y: 30px;
+
+  --gse-gap-xs: 10px;
+  --gse-gap-sm: 16px;
+  --gse-gap-md: 24px;
+  --gse-gap-lg: 36px;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  background: var(--gse-bg);
+  color: var(--gse-text);
+  font-family: var(--gse-font-body);
+  font-weight: 300;
+  /* Reveal's default 40px base must not leak into anything we forgot to size. */
+  font-size: var(--gse-body);
+}
+
+.reveal .slides {
+  box-sizing: border-box;
+  text-align: left;
+  font-weight: 300;
+}
+
+/* The page border lives on the section itself (not on .slides) so that the
+   on-screen stage, the headless probe used for overflow measurement, and the
+   printed PDF page all have byte-identical inner geometry (1021x765). */
+.reveal .slides section {
+  box-sizing: border-box;
+
+  width: 100%;
+  height: 100%;
+
+  padding:
+    var(--gse-padding-y)
+    var(--gse-padding-x);
+
+  border: 1.5px solid var(--gse-border);
+  border-radius: 7px;
+
+  text-align: left;
+  line-height: 1.35;
+  font-weight: 300;
+  /* Overflow is clipped, so a broken slide never spills outside its border.
+     The linter still measures scrollHeight > clientHeight and fails the build. */
+  overflow: hidden;
+}
+
+/* Any element that should own remaining vertical space is a flex column. */
+.layout-figure,
+.layout-image-right,
+.layout-image-left,
+.layout-image-bottom,
+.layout-grid,
+.layout-gallery {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.slide-body {
+  min-height: 0;
+}
+
+/* The body of an image-driven layout must itself be a flex column so the
+   media container gets a definite, flex-resolved height. */
+.layout-figure .slide-body,
+.layout-grid .slide-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   Headings
+   -------------------------------------------------------------------------- */
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0;
+  padding: 0;
+
+  font-family: var(--gse-font-title);
+  font-weight: 400;
+  line-height: 1.2;
+
+  color: var(--gse-text);
+  text-transform: none;
+  text-shadow: none;
+  letter-spacing: 0;
+}
+
+.reveal h1 {
+  margin: 0 0 20px;
+  padding: 0 25px;
+
+  font-size: var(--gse-h1);
+}
+
+.reveal h2 {
+  margin: 0 0 24px;
+  padding: 0 25px 6px;
+
+  font-size: var(--gse-h2);
+
+  border-bottom: 2px solid var(--gse-accent);
+}
+
+.reveal h3 {
+  margin: var(--gse-gap-sm) 0 var(--gse-gap-xs);
+  padding: 0 25px;
+  font-size: 36px;
+}
+
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: var(--gse-gap-sm) 0 var(--gse-gap-xs);
+  padding: 0 25px;
+  font-size: var(--gse-body);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Body copy
+   -------------------------------------------------------------------------- */
+
+.reveal p,
+.reveal li {
+  font-family: var(--gse-font-body);
+  font-size: var(--gse-body);
+  font-weight: 300;
+  line-height: 1.35;
+}
+
+.reveal p {
+  margin: var(--gse-gap-sm) 0;
+  padding: 0 25px;
+}
+
+.reveal ul,
+.reveal ol {
+  display: block;
+  margin: 12px 0;
+  padding-left: 55px;
+  padding-right: 25px;
+  width: auto;
+}
+
+.reveal li + li {
+  margin-top: var(--gse-gap-xs);
+}
+
+.reveal li > ul,
+.reveal li > ol {
+  margin: var(--gse-gap-xs) 0 0;
+  padding-left: 32px;
+  padding-right: 0;
+}
+
+.reveal ul ul {
+  list-style-type: circle;
+}
+
+.reveal ul ul ul {
+  list-style-type: square;
+}
+
+.reveal strong,
+.reveal b {
+  font-weight: 600;
+}
+
+.reveal em {
+  font-style: italic;
+}
+
+.reveal a {
+  color: var(--gse-accent);
+  text-decoration: none;
+}
+
+.reveal small {
+  font-size: 0.78em;
+}
+
+.accent {
+  color: var(--gse-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Quote
+   -------------------------------------------------------------------------- */
+
+.reveal blockquote {
+  margin: 28px 50px;
+  padding: 0;
+
+  width: auto;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  color: #444;
+  font-style: normal;
+}
+
+.reveal blockquote p {
+  font-family: var(--gse-font-serif);
+  font-size: 32px;
+  padding: 0;
+  margin: 0;
+}
+
+/* Section divider / centred quote (legacy `.middle` helper from the spec). */
+.middle {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.middle blockquote {
+  text-align: center;
+  color: var(--gse-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Code
+   -------------------------------------------------------------------------- */
+
+.reveal pre {
+  display: block;
+  position: relative;
+
+  width: auto;
+
+  margin: 18px 25px;
+  padding: 14px 18px;
+
+  border-radius: 8px;
+
+  background: var(--gse-code-bg);
+  box-shadow: none;
+
+  font-family: var(--gse-font-code);
+  font-size: var(--gse-code);
+  line-height: 1.35;
+  text-align: left;
+}
+
+.reveal pre code {
+  display: block;
+
+  max-height: 520px;
+
+  padding: 0;
+
+  background: transparent;
+  color: var(--gse-text);
+
+  font-family: var(--gse-font-code);
+  font-size: var(--gse-code);
+  line-height: 1.35;
+
+  white-space: pre;
+  word-wrap: normal;
+  overflow: hidden;
+}
+
+.reveal :not(pre) > code {
+  padding: 0.05em 0.3em;
+
+  border-radius: 4px;
+
+  background: var(--gse-code-bg);
+
+  font-family: var(--gse-font-code);
+  font-size: 0.92em;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Math (KaTeX renders at build time; it inherits body metrics)
+   -------------------------------------------------------------------------- */
+
+.reveal .katex {
+  font-size: 1.05em;
+}
+
+.reveal .katex-display {
+  margin: var(--gse-gap-sm) 0;
+  padding: 0 25px;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Tables
+   -------------------------------------------------------------------------- */
+
+.reveal table {
+  margin: 12px 25px;
+  width: auto;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  font-size: var(--gse-body);
+  line-height: 1.35;
+}
+
+.reveal table th,
+.reveal table td {
+  padding: 6px 18px;
+
+  border: 1px solid var(--gse-border);
+
+  font-size: var(--gse-body);
+  font-weight: 300;
+  text-align: left;
+  vertical-align: top;
+}
+
+.reveal table thead th {
+  border-bottom: 2px solid var(--gse-accent);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Images — always contain, never crop, never depend on the viewport
+   -------------------------------------------------------------------------- */
+
+.reveal img {
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.reveal .slide-image {
+  display: block;
+
+  width: auto;
+  height: auto;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+}
+
+/* figure: one image, almost no text */
+.layout-figure .figure-box {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-figure .figure-box img {
+  max-width: 92%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* split: text + image side by side (image-right / image-left).
+   The media cell stretches to the row height, which gives it a *definite*
+   height so that `max-height: 100%` on the image actually resolves. */
+.layout-image-right .slide-body,
+.layout-image-left .slide-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.4fr)
+    minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+
+  gap: 34px;
+
+  align-items: stretch;
+}
+
+/* image on the left: media column first, narrower text column second */
+.layout-image-left .slide-body {
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1.4fr);
+}
+
+.layout-image-right .text,
+.layout-image-left .text {
+  min-width: 0;
+  align-self: center;
+}
+
+.layout-image-right .media,
+.layout-image-left .media {
+  align-self: stretch;
+
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.layout-image-right .media img,
+.layout-image-left .media img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* image below text */
+.layout-image-bottom .slide-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.layout-image-bottom .text {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.layout-image-bottom .media {
+  /* a definite, flex-resolved height so the percentage below resolves;
+     landscape images may occupy at most 60% of the body area */
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 60%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-image-bottom .media img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* two / four images: equal, definite cells */
+.image-grid-2 {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 28px;
+}
+
+.image-grid-2.grid-rows-2 {
+  grid-template-rows: 1fr 1fr;
+}
+
+.image-grid-2 .grid-cell {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-grid-2 .grid-cell img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* explicit gallery override for many images */
+.layout-gallery .slide-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-gallery .image-gallery {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 20px;
+}
+
+.layout-gallery .grid-cell {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-gallery .grid-cell img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   Special pages
+   -------------------------------------------------------------------------- */
+
+/* title page */
+.layout-title {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.layout-title h1 {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+}
+
+.layout-title h2 {
+  width: 100%;
+  margin: 20px 0 0;
+  padding: 0;
+
+  text-align: center;
+
+  border-bottom: none;
+  color: var(--gse-muted);
+}
+
+.layout-title .title-meta {
+  margin-top: 64px;
+  text-align: center;
+}
+
+.layout-title .title-meta p {
+  margin: 6px 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* centred big title (section divider) */
+.layout-middle {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.layout-middle h1 {
+  width: 100%;
+  padding: 0;
+
+  text-align: center;
+}
+
+.layout-middle h2 {
+  width: 100%;
+  padding: 0;
+
+  text-align: center;
+
+  border-bottom: none;
+  color: var(--gse-muted);
+}
+
+.layout-middle .slide-body {
+  width: 100%;
+  text-align: center;
+}
+
+.layout-middle p {
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Slide number (rendered by us, so HTML / PDF / PPTX agree)
+   -------------------------------------------------------------------------- */
+
+.reveal .slide-index {
+  position: absolute;
+  right: 22px;
+  bottom: 12px;
+
+  font-family: var(--gse-font-body);
+  font-size: var(--gse-slide-number);
+  font-weight: 300;
+  line-height: 1;
+
+  color: var(--gse-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Reveal chrome we explicitly do not want
+   -------------------------------------------------------------------------- */
+
+.reveal .progress,
+.reveal .controls {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Print / PDF
+   --------------------------------------------------------------------------
+   PDF and PPTX are produced by src/export/*.mjs. They load the presentation
+   with screen media and inject a small export stylesheet (EXPORT_CSS in
+   src/render/html.mjs) that overrides only the <section> geometry.
+   Descendants keep their normal theme rules, so the exported page is
+   byte-identical to the on-screen stage.
+
+   We deliberately do NOT use @media print: reveal.css ships an
+   `@media print { html:not(.print-pdf) .reveal div { display:block } }` rule
+   which outranks the theme's layout rules and would break every image layout.
+   -------------------------------------------------------------------------- */

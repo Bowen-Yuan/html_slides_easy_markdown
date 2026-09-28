@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1016" height="616" viewBox="92 42 1016 616" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#6a005f"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="700" fill="#ffffff"/>
+
+  <g fill="#ffffff" stroke="#222222" stroke-width="2">
+    <rect x="120" y="70" width="960" height="130" rx="6"/>
+    <rect x="120" y="285" width="960" height="130" rx="6"/>
+    <rect x="120" y="500" width="960" height="130" rx="6"/>
+  </g>
+
+  <g stroke="#dddddd" stroke-width="2">
+    <line x1="430" y1="86" x2="430" y2="184"/>
+    <line x1="430" y1="301" x2="430" y2="399"/>
+    <line x1="430" y1="516" x2="430" y2="614"/>
+  </g>
+
+  <g fill="none" stroke="#6a005f" stroke-width="2">
+    <line x1="600" y1="200" x2="600" y2="285" marker-end="url(#arrow)"/>
+    <line x1="600" y1="415" x2="600" y2="500" marker-end="url(#arrow)"/>
+  </g>
+
+  <g font-family="Lato, 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif" fill="#222222">
+    <text x="150" y="143" font-size="24">Frontend</text>
+    <text x="150" y="358" font-size="24">Backend</text>
+    <text x="150" y="573" font-size="24">Database</text>
+  </g>
+
+  <g font-family="Lato, 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#555555" text-anchor="middle">
+    <text x="560" y="141">Components</text>
+    <text x="730" y="141">State</text>
+    <text x="900" y="141">Routing</text>
+    <text x="560" y="356">API</text>
+    <text x="730" y="356">Auth</text>
+    <text x="900" y="356">Jobs</text>
+    <text x="560" y="571">Tables</text>
+    <text x="730" y="571">Indexes</text>
+    <text x="900" y="571">Migrations</text>
+  </g>
+</svg>
